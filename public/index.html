@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediManage | Premium Medical Shop System</title>
+    <meta name="description" content="A premium medical shop management system to efficiently track and manage your medicine inventory.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-notes-medical brand-icon"></i>
+                <h1>MediManage</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" id="navInventory">
+                    <i class="fa-solid fa-pills"></i>
+                    <span>Inventory</span>
+                </a>
+                <a href="#" class="nav-item" id="navAnalytics">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile" id="adminProfileBtn" style="cursor: pointer; transition: 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <div class="avatar">Admin</div>
+                    <span>System Admin</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search medicines by name or brand...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="notificationBtn" style="position: relative;">
+                        <i class="fa-solid fa-bell"></i>
+                        <span id="notificationBadge" style="position: absolute; top: -2px; right: -2px; background: #ef4444; color: white; border-radius: 50%; width: 14px; height: 14px; font-size: 9px; align-items: center; justify-content: center; font-weight: bold; display: none;">0</span>
+                    </button>
+                    <button class="btn-primary" id="openAddModalBtn">
+                        <i class="fa-solid fa-plus"></i> Add Medicine
+                    </button>
+                </div>
+            </header>
+
+            <div id="inventoryView">
+            <section class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-capsules"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Medicines</h3>
+                        <p id="totalMedicinesStat">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="stat-info">
+                        <h3>Low Stock Alert</h3>
+                        <p id="lowStockStat">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon danger"><i class="fa-solid fa-calendar-xmark"></i></div>
+                    <div class="stat-info">
+                        <h3>Expiring Soon</h3>
+                        <p id="expiringStat">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="inventory-section">
+                <div class="section-header">
+                    <h2>Medicine Inventory</h2>
+                    <div class="filters">
+                        <select id="sortFilter" class="filter-select">
+                            <option value="name">Sort by Name</option>
+                            <option value="expiry">Sort by Expiry</option>
+                            <option value="stock">Sort by Stock</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="medicineTable">
+                        <thead>
+                            <tr>
+                                <th>Medicine Name</th>
+                                <th>Brand</th>
+                                <th>Price (₹)</th>
+                                <th>Stock</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="medicineTableBody">
+                            <!-- Data will be populated here via JS -->
+                        </tbody>
+                    </table>
+                    <div id="loadingIndicator" class="loading">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Loading data...
+                    </div>
+                </div>
+            </section>
+            </div>
+
+            <!-- Analytics View -->
+            <div id="analyticsView" style="display: none;">
+                <div class="section-header" style="margin-top: 20px; padding: 0 30px;">
+                    <h2>System Analytics</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px 30px;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin-bottom: 15px; color: var(--text-dark);">Stock Distribution</h3>
+                        <canvas id="stockChart"></canvas>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin-bottom: 15px; color: var(--text-dark);">Price Analysis</h3>
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settingsView" style="display: none; padding: 20px 30px;">
+                <div class="section-header" style="margin-bottom: 30px;">
+                    <h2>System Settings</h2>
+                </div>
+                <div style="background: var(--card-bg, white); padding: 30px; border-radius: 12px; max-width: 600px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-weight: 500; display: block; margin-bottom: 8px; color: var(--text-dark, #1e293b);">Shop Name</label>
+                        <input type="text" value="MediManage Pharmacy" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; background: var(--bg-color, #f4f7fe); color: var(--text-dark, #1e293b);">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-weight: 500; display: block; margin-bottom: 8px; color: var(--text-dark, #1e293b);">Currency</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; background: var(--bg-color, #f4f7fe); color: var(--text-dark, #1e293b);">
+                            <option>₹ (INR) - Indian Rupee</option>
+                            <option>$ (USD) - US Dollar</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                        <span style="font-weight: 500; color: var(--text-dark, #1e293b);">Enable Dark Theme</span>
+                        <input type="checkbox" id="themeToggle" style="width: 20px; height: 20px; cursor: pointer;">
+                    </div>
+                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" id="saveSettingsBtn">Save Configuration</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Generic Alert Modal -->
+    <div id="alertModal" class="modal-overlay hidden" style="z-index: 9999;">
+        <div class="modal" style="max-width: 400px; text-align: center;">
+            <div style="padding: 20px;">
+                <i class="fa-solid fa-circle-info" style="font-size: 40px; color: var(--primary-color); margin-bottom: 15px;"></i>
+                <h3 id="alertTitle" style="margin-bottom: 10px; font-size: 20px; color: var(--text-dark, #1e293b);">Notification</h3>
+                <p id="alertMessage" style="color: var(--text-muted, #64748b); margin-bottom: 25px;">Message goes here.</p>
+                <button class="btn-primary" id="closeAlertBtn" style="width: 100%;">Okay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Medicine Modal Container -->
+    <div id="medicineModal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-plus-circle"></i> Add New Medicine</h2>
+                <button class="close-modal" id="closeModalBtn"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="medicineForm">
+                    <div class="form-group">
+                        <label for="medName">Medicine Name</label>
+                        <input type="text" id="medName" required placeholder="e.g. Paracetamol 500mg">
+                    </div>
+                    <div class="form-group">
+                        <label for="medBrand">Brand / Manufacturer</label>
+                        <input type="text" id="medBrand" required placeholder="e.g. GSK">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="medPrice">Price (₹)</label>
+                            <input type="number" id="medPrice" step="0.01" required placeholder="10.50">
+                        </div>
+                        <div class="form-group">
+                            <label for="medStock">Stock Quantity</label>
+                            <input type="number" id="medStock" required placeholder="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="medExpiry">Expiry Date</label>
+                        <input type="date" id="medExpiry" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelFormBtn">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Medicine</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
