@@ -76,6 +76,7 @@ body {
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -477,4 +478,57 @@ input:focus {
     justify-content: flex-end;
     gap: 12px;
     margin-top: 30px;
+}
+
+/* --- Media Queries for Responsiveness --- */
+@media screen and (max-width: 1100px) {
+    .search-bar { width: 300px; }
+    .sidebar { width: 220px; }
+}
+
+@media screen and (max-width: 850px) {
+    .app-container { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        padding: 15px 20px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        justify-content: space-between;
+        align-items: center;
+        overflow-x: auto;
+    }
+    .brand { margin-bottom: 0; padding: 0; }
+    .nav-menu {
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        margin-left: auto;
+    }
+    .nav-item { padding: 10px; }
+    .nav-item span { display: none; } /* Show icons only */
+    .sidebar-footer { display: none; }
+    
+    .main-content { padding: 20px; }
+    .top-header { flex-direction: column; gap: 15px; align-items: stretch; }
+    .search-bar { width: 100%; }
+    .header-actions { justify-content: space-between; }
+    
+    .dashboard-stats { grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
+    
+    .modal { width: 90%; max-height: 90vh; overflow-y: auto; }
+    .form-row { flex-direction: column; gap: 0; }
+}
+
+@media screen and (max-width: 600px) {
+    .section-header { flex-direction: column; gap: 15px; align-items: flex-start; }
+    .section-header h2 { font-size: 18px; }
+    
+    .inventory-section { padding-bottom: 10px; }
+    .table-container { overflow-x: auto; }
+    table { min-width: 600px; } /* Ensures table scrolls horizontally on small screens */
+    th, td { padding: 12px 15px; font-size: 13px; }
+    
+    .btn-primary span { display: none; }
 }
