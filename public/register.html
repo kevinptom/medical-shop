@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediManage | Register</title>
+    <meta name="description" content="Register for MediManage premium medical shop management system.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .role-selection {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        .role-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .role-option input {
+            accent-color: #4CAF50;
+        }
+    </style>
+</head>
+<body class="login-body">
+    <!-- Background Animated Shapes -->
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="login-container">
+        <!-- Registration Form Area -->
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fa-solid fa-user-plus login-icon"></i>
+                <h1>Create Account</h1>
+                <p>Register to access MediManage</p>
+            </div>
+            
+            <form id="registerForm" class="login-form">
+                <div id="registerError" class="error-msg">Registration failed. Please try again.</div>
+                
+                <div class="form-group">
+                    <label>Role</label>
+                    <div class="role-selection">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="admin" required>
+                            <span>Admin</span>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="staff" checked required>
+                            <span>Staff</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username" placeholder="Choose a username" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" placeholder="Create a password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary login-btn">
+                    <span>Sign Up</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                
+                <div style="text-align: center; margin-top: 1.5rem; color: #a0aec0; font-size: 0.95rem;">
+                    Already have an account? <a href="login.html" style="color: #4CAF50; text-decoration: none; font-weight: 500;">Sign In</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Illustration Area -->
+        <div class="login-illustration">
+            <div class="glass-content">
+                <h2>Join MediManage.</h2>
+                <p>Empower your team with roles like Admin and Staff to securely manage inventory and operations.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+</html>

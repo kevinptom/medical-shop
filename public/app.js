@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Auth Check ---
+    if (sessionStorage.getItem('isAuthenticated') !== 'true') {
+        window.location.href = 'login.html';
+        return;
+    }
+
     // --- State Management ---
     let medicines = [];
     const API_URL = '/api/medicines';
@@ -320,6 +326,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (adminProfileBtn) {
         adminProfileBtn.addEventListener('click', () => {
             showAlert('System Administrator', 'Current user: Admin\n\nRole details: Full access to Inventory, Analytics, and Shop Settings.');
+        });
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('isAuthenticated');
+                sessionStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
         });
     }
 

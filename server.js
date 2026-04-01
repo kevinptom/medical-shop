@@ -35,7 +35,48 @@ const medicineSchema = new mongoose.Schema({
 
 const Medicine = mongoose.model('Medicine', medicineSchema);
 
+// User Schema & Model
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, enum: ['admin', 'staff'], default: 'staff' }
+});
+
+const User = mongoose.model('User', userSchema);
+
 // --- REST API Routes ---
+
+// --- Auth Routes ---
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { username, password, role } = req.body;
+        if (!username || !password || !role) {
+            return res.status(400).json({ error: 'Username, password and role are required' });
+        }
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Username already exists' });
+        }
+        const user = new User({ username, password, role });
+        await user.save();
+        res.status(201).json({ message: 'User registered successfully', role: user.role });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username, password });
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+        res.json({ message: 'Login successful', username: user.username, role: user.role });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // POST - Add new medicine
 app.post('/api/medicines', async (req, res) => {
