@@ -530,5 +530,5 @@ input:focus {
     table { min-width: 600px; } /* Ensures table scrolls horizontally on small screens */
     th, td { padding: 12px 15px; font-size: 13px; }
     
-    .btn-primary span { display: none; }
+    .header-actions .btn-primary span { display: none; }
 }
