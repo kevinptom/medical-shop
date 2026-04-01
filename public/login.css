@@ -255,44 +255,43 @@
 @media screen and (max-width: 992px) {
     body.login-body {
         align-items: flex-start;
-        padding-top: 40px;
+        padding: 40px 20px;
     }
     .login-container {
-        width: 85%;
+        width: 100%;
+        max-width: 450px;
         height: auto;
-        min-height: 550px;
+        min-height: auto;
         flex-direction: column;
-        margin: 40px 0;
+        margin: 0 auto;
     }
     .login-illustration {
-        flex: none;
-        padding: 40px;
+        display: none; /* Hide marketing panel on mobile for standard UI */
     }
     .login-card {
         padding: 40px 30px;
+        border-radius: 20px;
     }
 }
 
 @media screen and (max-width: 600px) {
+    body.login-body {
+        padding: 20px 10px;
+    }
     .login-container {
-        width: 95%;
-        margin: 20px 0;
+        width: 100%;
+        margin: 0 auto;
         border-radius: 16px;
     }
     .login-card {
         padding: 30px 20px;
+        border-radius: 16px;
     }
     .login-header h1 {
-        font-size: 24px;
-    }
-    .glass-content {
-        padding: 25px 20px;
-    }
-    .glass-content h2 {
         font-size: 22px;
     }
-    .glass-content p {
-        font-size: 14px;
+    .login-header p {
+        font-size: 13.5px;
     }
     .role-selection {
         flex-direction: column;
